@@ -1,16 +1,16 @@
 # Lab Report, Code Quality and Design Quality
 
-Repository URL:
+Repository URL: https://github.com/voodiepipo/itcs382-lab
 
 ## Tools
 
 | Item | Version or name |
 | --- | --- |
-| JDK | |
-| Maven | |
-| IDE | |
-| SonarQube for IDE | |
-| AI tool and exact model | |
+| JDK | `java -version`: 24.0.2; Maven runtime: OpenJDK 27.0.1.0.3 |
+| Maven | Apache Maven 3.10.0 |
+| IDE | Visual Studio Code 1.92.1 |
+| SonarQube for IDE | 4.29.0 installed; analysis could not be triggered |
+| AI tool and exact model | OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) |
 
 ## Task 1. SonarQube on the starter code
 
@@ -18,9 +18,11 @@ Commit of the starter, before any change: 49843f6
 
 Table 1. SonarQube issues in the starter code
 
+SonarQube for IDE 4.29.0 was installed and visible in VS Code. The command `SonarQube: Connect to SonarQube Server` failed with `SonarLint.ConnectToSonarQube not found`, and `SonarQube: Enable Automatic Analysis` did not appear in the Command Palette. Problems showed only Java extension warnings, so no SonarQube analysis results could be collected.
+
 | No. | Rule | File:line | Message |
 | --- | --- | --- | --- |
-| — | — | — | No SonarQube issues were displayed in Problems. |
+| — | — | — | No SonarQube issues could be confirmed because analysis could not be triggered. |
 
 ## Task 2. AI review of the starter code
 
@@ -56,7 +58,7 @@ Table 2. All findings on the starter code
 
 2.1 Two AI-only problems: the String identity comparison at ParcelService.java:42, and the unclosed FileWriter at ParcelService.java:76-79.
 
-2.2 None. The Problems panel showed no SonarQube issues; it showed only Java extension warnings.
+2.2 No SonarQube-only problem could be confirmed. The analysis command was missing, the server connection command failed, and Problems showed only Java extension warnings.
 
 2.3 I did not find an AI finding that was wrong. I checked each cited line in the four source files; for example, `pickUp` compares input strings with `==`, while `saveToFile` never closes its writer.
 
@@ -100,13 +102,13 @@ P1,PICKED_UP
 | Prompt (B or C as given, or your changed prompt in full) | Prompt B as given, with the BikeShare specification inserted | Prompt C as given, with the BikeShare specification inserted |
 | Builds with mvn package (yes or no) | yes | yes |
 | Number of classes, interfaces, enums and records | 1 | 8 |
-| SonarQube issues, total | Not checked in VS Code | Not checked in VS Code |
-| SonarQube issues, by rule | Not checked; no SonarQube result captured | Not checked; no SonarQube result captured |
+| SonarQube issues, total | Not available; analysis command unavailable | Not available; analysis command unavailable |
+| SonarQube issues, by rule | Not available; no analysis result captured | Not available; no analysis result captured |
 | AI review findings in Check 1 | 0 | 0 |
 | AI review findings in Check 2 | 6 | 2 |
 | Review output file in the reviews folder | reviews/bikeshare-poor-review.md | reviews/bikeshare-good-review.md |
 
-4.1 Not verified. No SonarQube diagnostics were captured for bikeshare-poor, so I cannot quote a rule or message about cohesion or coupling.
+4.1 I could not verify this. The SonarQube analysis command was unavailable, so no rule or message was produced to quote for bikeshare-poor.
 
 4.2 Yes. The AI review found that bikeshare-poor exposes shared public static data, uses integer member-type codes, and passes a boolean flag to choose the fee rule. Those issues do not appear in the bikeshare-good review, which uses private state and a `MemberType` enum.
 
@@ -114,11 +116,11 @@ P1,PICKED_UP
 
 ## Task 5. Reflection
 
-5.1 What does SonarQube check, and what does it not check? Answer with examples from this lab.
+5.1 SonarQube checks code against language rules that can flag issues such as resource leaks, unused code, and suspicious comparisons. It does not decide whether the overall design fits the course goals; for example, choosing whether `ParcelService` has too many responsibilities needs design reasoning. In this lab I could not collect SonarQube results because its analysis command did not appear.
 
-5.2 When should you not trust the AI review? Give an example from this lab.
+5.2 Do not accept an AI finding without checking the cited code and whether its reasoning fits the design. For example, the review called passing a `Ride` to `RideRepository.save` stamp coupling; that is a real coupling category, but it can be a reasonable interface when the repository needs the whole ride to persist it.
 
-5.3 What will you do differently in Project Phase 2 after this lab?
+5.3 In Project Phase 2 I will represent fixed choices such as member types and parcel sizes with enums instead of integer codes, and keep persistence separate from business rules. I will build and run example commands after each change, then verify the analyzer's actual results and check each finding against the source.
 
 ## AI usage declaration
 
