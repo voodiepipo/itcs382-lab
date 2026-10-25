@@ -13,9 +13,9 @@ public class ParcelService {
     private int maxParcels = 100;
 
     public ParcelService() {
-        lockers.add(new Locker(1, 1));
-        lockers.add(new Locker(2, 2));
-        lockers.add(new Locker(3, 3));
+        lockers.add(new Locker(1, ParcelSize.SMALL));
+        lockers.add(new Locker(2, ParcelSize.MEDIUM));
+        lockers.add(new Locker(3, ParcelSize.LARGE));
     }
 
     public List<Locker> getLockers() {
@@ -24,7 +24,7 @@ public class ParcelService {
 
     public Locker storeParcel(Parcel parcel) {
         for (Locker locker : lockers) {
-            if (locker.isFree() && locker.getSize() >= parcel.getSize()) {
+            if (locker.isFree() && locker.getSize().canFit(parcel.getSize())) {
                 locker.setParcel(parcel);
                 parcel.status = "STORED";
                 parcels.add(parcel);
@@ -54,12 +54,7 @@ public class ParcelService {
         if (days <= 3) {
             return 0;
         }
-        if (parcel.getSize() == 1) {
-            return (days - 3) * 10.0;
-        } else if (parcel.getSize() == 2) {
-            return (days - 3) * 15.0;
-        }
-        return (days - 3) * 20.0;
+        return (days - 3) * parcel.getSize().getFeePerExtraDay();
     }
 
     public void printParcels(boolean forStaff) {
