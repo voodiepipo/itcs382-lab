@@ -95,22 +95,22 @@ P1,PICKED_UP
 
 | Item | bikeshare-poor | bikeshare-good |
 | --- | --- | --- |
-| Date | | |
-| AI tool and exact model | | |
-| Prompt (B or C as given, or your changed prompt in full) | | |
-| Builds with mvn package (yes or no) | | |
-| Number of classes, interfaces, enums and records | | |
-| SonarQube issues, total | | |
-| SonarQube issues, by rule | | |
-| AI review findings in Check 1 | | |
-| AI review findings in Check 2 | | |
-| Review output file in the reviews folder | | |
+| Date | 2026-10-25 | 2026-10-25 |
+| AI tool and exact model | OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) | OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) |
+| Prompt (B or C as given, or your changed prompt in full) | Prompt B as given, with the BikeShare specification inserted | Prompt C as given, with the BikeShare specification inserted |
+| Builds with mvn package (yes or no) | yes | yes |
+| Number of classes, interfaces, enums and records | 1 | 8 |
+| SonarQube issues, total | Not checked in VS Code | Not checked in VS Code |
+| SonarQube issues, by rule | Not checked; no SonarQube result captured | Not checked; no SonarQube result captured |
+| AI review findings in Check 1 | 0 | 0 |
+| AI review findings in Check 2 | 6 | 2 |
+| Review output file in the reviews folder | reviews/bikeshare-poor-review.md | reviews/bikeshare-good-review.md |
 
-4.1 Did SonarQube report any cohesion or coupling problem in bikeshare-poor? Quote the rule and the message if it did.
+4.1 Not verified. No SonarQube diagnostics were captured for bikeshare-poor, so I cannot quote a rule or message about cohesion or coupling.
 
-4.2 Did the AI review tell the two versions apart? Give one finding for bikeshare-poor that does not appear for bikeshare-good.
+4.2 Yes. The AI review found that bikeshare-poor exposes shared public static data, uses integer member-type codes, and passes a boolean flag to choose the fee rule. Those issues do not appear in the bikeshare-good review, which uses private state and a `MemberType` enum.
 
-4.3 Which version would you rather extend with a new member type, such as a visitor who pays 4 baht per minute, and why?
+4.3 I would extend bikeshare-good. `MemberType` holds the fee rate, so adding a visitor type with a 4-baht rate is localized to the enum and does not require changing the shared integer codes and boolean fee logic in bikeshare-poor.
 
 ## Task 5. Reflection
 
@@ -124,4 +124,4 @@ P1,PICKED_UP
 
 | AI tool and exact model | Purpose | Files or parts that it produced or changed | How you checked its output |
 | --- | --- | --- | --- |
-| OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) | Reviewed starter code and implemented requested fixes | `reviews/parcelpoint-review.md`, `LAB_REPORT.md`, and ParcelPoint Java source files | Ran `mvn package` and the sample commands after each code fix; all builds succeeded and the sample output/CSV were checked. |
+| OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) | Reviewed starter code, generated and reviewed both BikeShare designs, and implemented requested fixes | `reviews/*.md`, `LAB_REPORT.md`, ParcelPoint Java source files, and both BikeShare Maven projects | Ran `mvn package` and the sample commands after each code fix; all builds succeeded and the sample output/CSV were checked. |
