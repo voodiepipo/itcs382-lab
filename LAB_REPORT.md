@@ -20,7 +20,7 @@ Table 1. SonarQube issues in the starter code
 
 | No. | Rule | File:line | Message |
 | --- | --- | --- | --- |
-| 1 | | | |
+| — | — | — | No SonarQube issues were displayed in Problems. |
 
 ## Task 2. AI review of the starter code
 
@@ -66,21 +66,29 @@ Table 3. What you did with each SonarQube issue in Table 1
 
 | No. in Table 1 | Fixed or kept | Commit, or the reason for keeping it |
 | --- | --- | --- |
-| 1 | | |
+| — | None shown | The Problems panel showed no SonarQube findings, so there was no Table 1 issue to fix. |
 
-Number of SonarQube issues that remain after your fixes:
+Number of SonarQube issues that remain after your fixes: Not measurable; the Problems panel showed no SonarQube findings before the fixes.
 
 The two design problems that you fixed
 
 | Design problem (course term) | What you changed | Commit |
 | --- | --- | --- |
-| | | |
-| | | |
+| Connascence of type from integer parcel-size codes | Replaced size codes with the `ParcelSize` enum. | 047511e |
+| Public field / content coupling for parcel status | Made status private and represented it with the `ParcelStatus` enum and state-changing methods. | 7c8ecd0 |
 
 Output of the program after your fixes, for the commands `store P1 6501 2`, `pickup P1 5` and `staff`, and the content of parcels.csv:
 
 ```text
+Commands: store <code> <studentId> <size 1-3>, pickup <code> <days>, list, staff, quit
+SMS to 6501: parcel P1 is in locker 2
+Locker 2
+Fee: 30.0
+P1 6501 PICKED_UP
+Free lockers: 3
 
+parcels.csv:
+P1,PICKED_UP
 ```
 
 ## Task 4. AI-generated poor and good designs
@@ -116,4 +124,4 @@ Output of the program after your fixes, for the commands `store P1 6501 2`, `pic
 
 | AI tool and exact model | Purpose | Files or parts that it produced or changed | How you checked its output |
 | --- | --- | --- | --- |
-| | | | |
+| OpenAI Codex, GPT-6 (exact runtime variant not shown in this interface) | Reviewed starter code and implemented requested fixes | `reviews/parcelpoint-review.md`, `LAB_REPORT.md`, and ParcelPoint Java source files | Ran `mvn package` and the sample commands after each code fix; all builds succeeded and the sample output/CSV were checked. |
